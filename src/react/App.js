@@ -1,36 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { channels } from '../shared/constants';
-const { ipcRenderer } = window; 
+import Lottie from 'react-lottie';
+import animationData from './assets/animations/login_books.json';
+import WebFont from 'webfontloader';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      appName: '',
-      appVersion: '',
-    }
-    ipcRenderer.send(channels.APP_INFO);
-    ipcRenderer.on(channels.APP_INFO, (event, arg) => {
-      ipcRenderer.removeAllListeners(channels.APP_INFO);
-      const { appName, appVersion } = arg;
-      this.setState({ appName, appVersion });
-    });
+const defaultOptions = {
+  loop: true,
+  autoplay: true, 
+  animationData: animationData,
+};
+
+WebFont.load({
+  google: {
+    families: ['Indie Flower', 'MuseoModerno:300,400,700', 'Kaushan Script']
+  },
+  typekit: {
+    id: 'corner-store-jf'
+  }
+})
+
+export default class App extends Component {
+
+  renderLoadingAnimation = () => {
+    return (
+      <Lottie options={defaultOptions}
+        height={400}
+        width={400}
+      />
+    )
   }
 
-  render() {
-    const { appName, appVersion } = this.state;
+  renderLoginForm = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>{appName} version {appVersion}</p>
-          <p>These are some changesss</p>
-        </header>
+      <div style={{display: 'flex', marginLeft: 50}}>
+        <h3>Login to your account</h3>
       </div>
-    );
+    )
+  }
+
+  render(){
+
+    return(
+      <div>
+        <div style={{display: 'flex', justifyContent: 'center', fontFamily: 'Kaushan Script'}}>
+          <h1>Ultra Strength Shop</h1>
+        </div>
+        <div style={{display: 'flex'}}>
+          {this.renderLoadingAnimation()}
+        </div>
+      </div>
+    )
   }
 }
-
-export default App;
