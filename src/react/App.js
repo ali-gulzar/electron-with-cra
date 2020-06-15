@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Lottie from 'react-lottie';
-import animationData from './assets/animations/work.json';
+import animationData from './assets/animations/review.json';
 import WebFont from 'webfontloader';
 import { Form, Input, Button, notification } from 'antd';
+import './App.css';
 
 // Load custom fonts
 WebFont.load({
@@ -64,8 +65,8 @@ export default class App extends Component {
     return (
       <div style={{display: 'flex'}}>
         <Lottie options={defaultOptions}
-          height={650}
-          width={650}
+          height={625}
+          width={625}
         />
       </div>
     )
@@ -114,7 +115,7 @@ export default class App extends Component {
   render(){
 
     return(
-      <div>
+      <div className="App">
         <div style={{display: 'flex', justifyContent: 'center', fontFamily: 'Kaushan Script'}}>
           <h1 style={{marginTop: 20, fontSize: 40}}>Ultra Strength Shop</h1>
         </div>
