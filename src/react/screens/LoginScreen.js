@@ -1,25 +1,14 @@
 import React, { Component } from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../assets/animations/review.json';
-import WebFont from 'webfontloader';
 import { Form, Input, Button, notification } from 'antd';
 import firebase from 'firebase';
 import '../App.css';
 
-// Load custom fonts
-WebFont.load({
-  google: {
-    families: ['Indie Flower', 'MuseoModerno:300,400,700', 'Kaushan Script']
-  },
-  typekit: {
-    id: 'corner-store-jf'
-  }
-})
-
 // Options for animations
 const defaultOptions = {
   loop: true,
-  autoplay: true, 
+  autoplay: true,
   animationData: animationData,
 };
 
@@ -51,13 +40,13 @@ export default class LoginScreen extends Component {
 
   onFinish = async values => {
     this.setState({disable: true})
-    const username = values.username
+    const email = values.email
     const password = values.password
-    await firebase.auth().signInWithEmailAndPassword(username, password)
+    await firebase.auth().signInWithEmailAndPassword(email, password)
     .then(res => {
         notification['success']({
             message: 'Successfull',
-            description: `Welcome ${username} to Ultra Strength Shop.`
+            description: 'Welcome Umer Fiaz to Ultra Strength Shop.'
         });
         this.props.login();
     }).catch(e => {
@@ -99,9 +88,9 @@ export default class LoginScreen extends Component {
           onFinishFailed={this.onFinishFailed}
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: 'Please input your email!' }]}
           >
             <Input />
           </Form.Item>
