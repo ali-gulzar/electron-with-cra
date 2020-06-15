@@ -3,6 +3,7 @@ import Lottie from 'react-lottie';
 import animationData from '../assets/animations/review.json';
 import WebFont from 'webfontloader';
 import { Form, Input, Button, notification } from 'antd';
+import firebase from 'firebase';
 import '../App.css';
 
 // Load custom fonts
@@ -48,12 +49,23 @@ export default class LoginScreen extends Component {
     }
   }
 
-  onFinish = values => {
+  onFinish = async values => {
     this.setState({disable: true})
-    notification['success']({
-      message: 'Successfull',
-      description: `Welcome ${values.username} to Ultra Strength Shop.`
+    const username = values.username
+    const password = values.password
+    await firebase.auth().signInWithEmailAndPassword(username, password)
+    .then(res => {
+        notification['success']({
+            message: 'Successfull',
+            description: `Welcome ${username} to Ultra Strength Shop.`
+        });
+        this.props.login();
+    }).catch(e => {
+      notification['error']({
+        message: 'Error',
+        description: 'Wrong credentials. Please provide valid email and password.'
     });
+    })
     this.setState({disable: false})
   };
 
