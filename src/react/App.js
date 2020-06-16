@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import LoginScreen from './screens/LoginScreen';
-import DashboardScreen from './screens/DashboardScreen';
 import firebase from 'firebase';
 import firebaseConfig from '../firebase.config.js';
 import WebFont from 'webfontloader';
+
+import LoginScreen from './screens/LoginScreen';
+import Main from './screens/Main';
 import './App.css';
 
 // Load custom fonts
@@ -41,7 +42,7 @@ export default class App extends Component {
     const {loggedIn} = this.state;
     return(
       <div>
-        {loggedIn ? <DashboardScreen logout={this.logOut}/> : <LoginScreen login={this.logIn}/>}
+        {loggedIn ? <Main logout={this.logOut}/> : <LoginScreen login={this.logIn}/>}
       </div>
     )
   }
