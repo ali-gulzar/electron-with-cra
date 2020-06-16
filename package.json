@@ -11,6 +11,7 @@
     "react-dom": "^16.8.6",
     "react-lottie": "^1.2.3",
     "react-scripts": "3.0.1",
+    "recharts": "^1.8.5",
     "webfontloader": "^1.6.28"
   },
   "homepage": "./",

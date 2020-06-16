@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
 import { LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import Card from './Card';
+import Graph from './Graph';
 
 export default class DashboardScreen extends Component {
 
@@ -34,7 +35,7 @@ export default class DashboardScreen extends Component {
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <h1 style={{fontFamily: 'Kaushan Script'}}>Ultra Strength</h1>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-          <h3 style={{marginRight: 20, fontFamily: 'MuseoModerno'}}>Umer Fiaz</h3>
+          <h3 style={{marginRight: 20, fontFamily: 'MuseoModerno', marginTop: 6}}>Umer Fiaz</h3>
           <LogoutOutlined style={{ fontSize: '40px'}} onClick={() => this.setState({visible: true})}/>
         </div>
       </div>
@@ -66,12 +67,15 @@ export default class DashboardScreen extends Component {
     )
   }
 
-  renderStatistics = () => {
+  renderStatisticsAndGraphs = () => {
     return (
-      <div style={{display: 'flex', marginTop: 20}}>
-        <Card colorValue="card-profit" title="Profit" value="1,300,000"/>
-        <Card colorValue="card-sales" title="Sales" value="5,500,000"/>
-        <Card colorValue="card-expenses" title="Expenses" value="100,000"/>
+      <div>
+        <div style={{display: 'flex', marginTop: 20, marginBottom: 50}}>
+          <Card colorValue="card-profit" title="Profit" value="1,300,000"/>
+          <Card colorValue="card-sales" title="Sales" value="5,500,000"/>
+          <Card colorValue="card-expenses" title="Expenses" value="100,000"/>
+        </div>
+        <Graph/>
       </div>
     )
   }
@@ -83,9 +87,8 @@ export default class DashboardScreen extends Component {
           {this.renderHeader()}
           <div style={{display: 'flex'}}>
             {this.renderMenu()}
-            {this.renderStatistics()}
+            {this.renderStatisticsAndGraphs()}
           </div>
-
           {this.renderLogoutModal()}
       </div>
     )
