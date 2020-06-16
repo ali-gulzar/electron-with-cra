@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
 import { LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined } from '@ant-design/icons';
+import Card from './Card';
 
 export default class DashboardScreen extends Component {
 
@@ -42,7 +43,7 @@ export default class DashboardScreen extends Component {
 
   renderMenu = () => {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: 150, marginTop: 20}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: 150, marginTop: 20, marginRight: 100}}>
         <Button type="primary" ghost={true} primary icon={<DashboardOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
           Dashboard
         </Button>
@@ -65,12 +66,26 @@ export default class DashboardScreen extends Component {
     )
   }
 
+  renderStatistics = () => {
+    return (
+      <div style={{display: 'flex', marginTop: 20}}>
+        <Card colorValue="card-profit"/>
+        <Card colorValue="card-sales"/>
+        <Card colorValue="card-expenses"/>
+      </div>
+    )
+  }
+
   render(){
 
     return(
       <div style={{margin: 20}}>
           {this.renderHeader()}
-          {this.renderMenu()}
+          <div style={{display: 'flex'}}>
+            {this.renderMenu()}
+            {this.renderStatistics()}
+          </div>
+
           {this.renderLogoutModal()}
       </div>
     )

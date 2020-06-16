@@ -4,6 +4,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import firebase from 'firebase';
 import firebaseConfig from '../firebase.config.js';
 import WebFont from 'webfontloader';
+import './App.css';
 
 // Load custom fonts
 WebFont.load({

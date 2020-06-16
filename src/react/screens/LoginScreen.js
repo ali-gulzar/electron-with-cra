@@ -3,7 +3,6 @@ import Lottie from 'react-lottie';
 import animationData from '../assets/animations/review.json';
 import { Form, Input, Button, notification } from 'antd';
 import firebase from 'firebase';
-import '../App.css';
 
 // Options for animations
 const defaultOptions = {
