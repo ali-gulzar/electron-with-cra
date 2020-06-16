@@ -69,9 +69,9 @@ export default class DashboardScreen extends Component {
   renderStatistics = () => {
     return (
       <div style={{display: 'flex', marginTop: 20}}>
-        <Card colorValue="card-profit"/>
-        <Card colorValue="card-sales"/>
-        <Card colorValue="card-expenses"/>
+        <Card colorValue="card-profit" title="Profit" value="1,300,000"/>
+        <Card colorValue="card-sales" title="Sales" value="5,500,000"/>
+        <Card colorValue="card-expenses" title="Expenses" value="100,000"/>
       </div>
     )
   }
