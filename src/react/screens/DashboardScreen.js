@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
-import { LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import Card from './Card';
 
 export default class DashboardScreen extends Component {
@@ -50,17 +50,17 @@ export default class DashboardScreen extends Component {
         <Button type="primary" ghost={true} primary icon={<ShopOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
           Inventory
         </Button>
+        <Button type="primary" ghost={true} primary icon={<PlusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
+          Debtors
+        </Button>
+        <Button type="primary" ghost={true} primary icon={<MinusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
+          Creditors
+        </Button>
         <Button type="primary" ghost={true} primary icon={<ShoppingCartOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
           Purchases
         </Button>
         <Button type="primary" ghost={true} primary icon={<ShoppingOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
           Sales
-        </Button>
-        <Button type="primary" ghost={true} primary icon={<ShoppingCartOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
-          Creditors
-        </Button>
-        <Button type="primary" ghost={true} primary icon={<ShoppingCartOutlined/>} size="large" shape="round" style={{marginBottom: 10}}>
-          Debtors
         </Button>
       </div>
     )
