@@ -15,7 +15,7 @@ export default class Main extends Component {
     super(props)
     this.state = {
       visible: false,
-      view: 'dashboard'
+      view: 'inventory'
     }
   }
 
@@ -101,12 +101,12 @@ export default class Main extends Component {
 
     return(
       <div style={{margin: 20}}>
-          {this.renderHeader()}
-          <div style={{display: 'flex'}}>
-            {this.renderMenu()}
-            {this.renderScreen()}
-          </div>
-          {this.renderLogoutModal()}
+        {this.renderHeader()}
+        <div style={{display: 'flex'}}>
+          {this.renderMenu()}
+          {this.renderScreen()}
+        </div>
+        {this.renderLogoutModal()}
       </div>
     )
   }
