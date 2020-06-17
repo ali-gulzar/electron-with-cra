@@ -96,6 +96,21 @@ const PurchasesForm = () => {
           date: dateAdded,
           key: key
     })
+
+    const inventoryRef = firebase.database().ref('inventory').child(values.productName)
+    inventoryRef.once('value', function (snapshot) {
+      if (snapshot.val() != null) {
+        const previousQuantity = snapshot.val().quantity
+        inventoryRef.update({
+              quantity: (parseInt(values.quantity) + parseInt(previousQuantity))
+        })
+      } else {
+        inventoryRef.set({
+              quantity: values.quantity,
+              productName: values.productName
+        })
+      }
+    })
   };
 
   return (
