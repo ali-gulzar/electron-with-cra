@@ -15,7 +15,7 @@ export default class Main extends Component {
     super(props)
     this.state = {
       visible: false,
-      view: 'purchases'
+      view: 'sales'
     }
   }
 
