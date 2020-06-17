@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
-import { LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { DollarOutlined, LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
 import DashboardScreen from './DashboardScreen';
 import InventoryScreen from './InventoryScreen';
@@ -8,6 +8,7 @@ import DebtorsScreen from './DebtorsScreen';
 import CreditorsScreen from './CreditorsScreen';
 import PurchasesScreen from './PurchasesScreen';
 import SalesScreen from './SalesScreen';
+import CashScreen from './CashScreen';
 
 export default class Main extends Component {
 
@@ -15,7 +16,7 @@ export default class Main extends Component {
     super(props)
     this.state = {
       visible: false,
-      view: 'inventory'
+      view: 'dashboard'
     }
   }
 
@@ -41,22 +42,18 @@ export default class Main extends Component {
     switch (view) {
       case 'dashboard':
         return <DashboardScreen/>
-        break;
       case 'inventory':
         return <InventoryScreen/>
-        break;
       case 'debtors':
         return <DebtorsScreen/>
-        break;
       case 'creditors':
         return <CreditorsScreen/>
-        break;
       case 'purchases':
         return <PurchasesScreen/>
-        break;
       case 'sales':
         return <SalesScreen/>
-        break;
+      default:
+        return <CashScreen/>
     }
   }
 
@@ -81,17 +78,20 @@ export default class Main extends Component {
         <Button type="primary" ghost={true} primary icon={<ShopOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'inventory'})}>
           Inventory
         </Button>
-        <Button type="primary" ghost={true} primary icon={<PlusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'debtors'})}>
-          Debtors
-        </Button>
-        <Button type="primary" ghost={true} primary icon={<MinusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'creditors'})}>
-          Creditors
-        </Button>
         <Button type="primary" ghost={true} primary icon={<ShoppingCartOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'purchases'})}>
           Purchases
         </Button>
         <Button type="primary" ghost={true} primary icon={<ShoppingOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'sales'})}>
           Sales
+        </Button>
+        <Button type="primary" ghost={true} primary icon={<DollarOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'cash'})}>
+          Cash
+        </Button>
+        <Button type="primary" ghost={true} primary icon={<PlusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'debtors'})}>
+          Debtors
+        </Button>
+        <Button type="primary" ghost={true} primary icon={<MinusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'creditors'})}>
+          Creditors
         </Button>
       </div>
     )
