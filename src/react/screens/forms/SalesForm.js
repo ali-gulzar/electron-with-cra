@@ -43,7 +43,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, productNames }) => 
           ]}
         >
           <Select
-            placeholder="Select a buyer"
+            placeholder="Select the product to sale."
             allowClear
           >
           {productNames.map((item, index) =>

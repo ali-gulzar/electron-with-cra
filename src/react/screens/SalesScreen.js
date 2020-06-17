@@ -12,10 +12,9 @@ export default function SalesScreen () {
   },[])
 
   function getProductNames () {
-    firebase.database().ref("purchases").on('value', async function (snapshot) {
+    firebase.database().ref("inventory").on('value', async function (snapshot) {
       if (snapshot.val()) {
-        let fetchedData = await Object.values(snapshot.val());
-        fetchedData = fetchedData.map(value => value.productName)
+        const fetchedData = await Object.keys(snapshot.val());
         await setProductName(fetchedData)
       }
     });
