@@ -25,3 +25,12 @@
 .card-profit {
   background: linear-gradient(#02aab0, #00cdac)
 }
+
+.box {
+    position:relative;
+}
+.floating-button {
+    position:absolute;
+    bottom:0;
+    right:0;
+}

@@ -10,7 +10,7 @@ import './App.css';
 // Load custom fonts
 WebFont.load({
   google: {
-    families: ['Indie Flower', 'MuseoModerno:700', 'Kaushan Script', 'Permanent Marker']
+    families: ['Indie Flower', 'MuseoModerno:700', 'Kaushan Script', 'Permanent Marker','Roboto:300,400,500,700']
   },
   typekit: {
     id: 'corner-store-jf'

@@ -15,7 +15,7 @@ export default class Main extends Component {
     super(props)
     this.state = {
       visible: false,
-      view: 'inventory'
+      view: 'purchases'
     }
   }
 
@@ -24,14 +24,14 @@ export default class Main extends Component {
 
     return (
       <Modal
-      title="Logout"
-      visible={visible}
-      onOk={() => this.props.logout()}
-      onCancel={() => this.setState({visible: false})}
-      okText="Confirm"
-      cancelText="Cancel"
+        title="Logout"
+        visible={visible}
+        onOk={() => this.props.logout()}
+        onCancel={() => this.setState({visible: false})}
+        okText="Confirm"
+        cancelText="Cancel"
       >
-      <p>Are you sure you want to logout from this service?</p>
+        <p>Are you sure you want to logout from this service?</p>
       </Modal>
     )
   }
