@@ -3,8 +3,6 @@ import SalesForm from './forms/SalesForm';
 import SalesTable from './tables/SalesTable';
 import firebase from 'firebase';
 
-var filter = require('lodash.filter');
-
 export default function SalesScreen () {
 
   const[productName, setProductName] = useState([]);
