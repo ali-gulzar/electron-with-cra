@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, Select, message } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, DatePicker, message } from 'antd';
 import firebase from 'firebase';
-
-const { Option } = Select;
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm();
@@ -32,27 +30,16 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
         name="purchases-form"
       >
         <Form.Item
-          name="transaction"
-          label="Transaction"
+          name="creditorName"
+          label="Creditor Name"
           rules={[
             {
               required: true,
-              message: 'Please enter the name of the product!',
+              message: 'Please enter the name of the creditor!',
             },
           ]}
         >
-          <Select
-            placeholder="Reason to perform cash transaction!"
-            allowClear
-          >
-          <Option value="sales">Sales</Option>
-          <Option value="purchases">Purchases</Option>
-          <Option value="sales-return">Sales Return</Option>
-          <Option value="purchase-return">Purchase Return</Option>
-          <Option value="expenses">Expenses</Option>
-          <Option value="cash-input">Cash Input</Option>
-          <Option value="cash-output">Cash Output</Option>
-          </Select>
+        <Input/>
         </Form.Item>
         <Form.Item
           name="description"
@@ -99,7 +86,33 @@ const CreditorsForm = () => {
   const [visible, setVisible] = useState(false);
 
   const onCreate = async values => {
-    console.log(values);
+    const ref = firebase.database().ref('creditors')
+    const totalRef = ref.child('total')
+
+    // Update total value
+    totalRef.once('value', async function (snapshot) {
+      if (snapshot.val()) {
+        const previousTotal = snapshot.val().value
+        totalRef.update({
+          value: previousTotal + values.cash
+        })
+      } else {
+        totalRef.set({
+          value: values.cash
+        })
+      }
+    })
+
+    // Update debtor database
+    const key = ref.push().key;
+    const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
+    await ref.child(key).set({
+      creditorName: values.creditorName,
+      description: values.description,
+      date: dateAdded,
+      cash: values.cash,
+      key: key
+    })
   };
 
   return (
