@@ -7,10 +7,12 @@ var omit = require('lodash.omit');
 export default function CashTable() {
 
   const [cashData, setCashData] = useState([]);
+  const [cashTotal, setCashTotal] = useState([]);
 
   useEffect(() => {
     firebase.database().ref("cash").on('value', async function (snapshot) {
       if (snapshot.val()) {
+        setCashTotal(snapshot.val().total.value)
         const removeTotal = await omit(snapshot.val(), ['total'])
         const fetchedData = await Object.values(removeTotal);
         setCashData(fetchedData);
@@ -26,12 +28,9 @@ export default function CashTable() {
     itemReference.remove();
 
     const totalReference = firebase.database().ref("cash/total");
-    totalReference.once("value", function(snapshot) {
-      const previousTotal = snapshot.val().value
-      totalReference.update({
-        value: operationPlus ? (previousTotal - cash) : (previousTotal + cash)
-      })
-    })
+    totalReference.update({
+      value: operationPlus ? (cashTotal - cash) : (cashTotal + cash)
+    });
   }
 
   const columns = [

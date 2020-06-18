@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Table, Popconfirm } from 'antd';
 import firebase from 'firebase';
 
+var omit = require('lodash.omit');
+
 export default function PurchasesTable() {
 
   const [purchaseData, setPurchaseData] = useState([]);
@@ -17,18 +19,19 @@ export default function PurchasesTable() {
 
   function deleteItem (key, productName, quantity) {
 
-    // Delete item from purchases
+    // Update purchase database
     const itemReference = firebase.database().ref("purchases/" + key);
     itemReference.remove();
 
-    // Update inventory
-    const inventoryRef = firebase.database().ref('inventory').child(productName)
-    inventoryRef.once('value', function (snapshot) {
-        const previousQuantity = snapshot.val().quantity
-        inventoryRef.update({
-              quantity: (parseInt(previousQuantity) - parseInt(quantity))
-        })
+    // Update inventory database
+    const inventoryRef = firebase.database().ref("inventory/" + productName)
+    inventoryRef.once("value", function (snapshot) {
+      const previousQuantity = snapshot.val().quantity
+      inventoryRef.update({
+        quantity: previousQuantity - quantity
+      })
     })
+
   }
 
   const columns = [
@@ -38,14 +41,14 @@ export default function PurchasesTable() {
       key: 'productName',
     },
     {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-    },
-    {
       title: 'Quantity',
       dataIndex: 'quantity',
       key: 'quantity',
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
     },
     {
       title: 'Date',

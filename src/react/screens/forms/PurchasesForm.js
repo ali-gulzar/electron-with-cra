@@ -99,7 +99,7 @@ const PurchasesForm = () => {
     })
 
     // Make or update inventory
-    const inventoryRef = firebase.database().ref('inventory').child(values.productName)
+    const inventoryRef = firebase.database().ref('inventory/' + values.productName)
     inventoryRef.once('value', function (snapshot) {
       if (snapshot.val() != null) {
         const previousQuantity = snapshot.val().quantity
@@ -113,7 +113,7 @@ const PurchasesForm = () => {
         })
       }
     })
-    
+
   };
 
   return (

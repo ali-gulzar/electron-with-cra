@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DebtorsForm from './forms/DebtorsForm';
 import DebtorsTable from './tables/DebtorsTable';
 
