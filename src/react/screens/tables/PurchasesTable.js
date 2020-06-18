@@ -7,21 +7,29 @@ var omit = require('lodash.omit');
 export default function PurchasesTable() {
 
   const [purchaseData, setPurchaseData] = useState([]);
+  const [purchaseTotal, setPurchaseTotal] = useState(0);
 
   useEffect(() => {
     firebase.database().ref("purchases").on('value', async function (snapshot) {
       if (snapshot.val()) {
-        const fetchedData = await Object.values(snapshot.val());
+        setPurchaseTotal(snapshot.val().total.value)
+        const removeTotal = await omit(snapshot.val(), ['total'])
+        const fetchedData = await Object.values(removeTotal);
         setPurchaseData(fetchedData);
       }
     });
   },[])
 
-  function deleteItem (key, productName, quantity) {
+  function deleteItem (key, productName, quantity, price) {
 
     // Update purchase database
     const itemReference = firebase.database().ref("purchases/" + key);
     itemReference.remove();
+
+    // Update total purchases
+    firebase.database().ref("purchases/total").update({
+      value: purchaseTotal - price
+    })
 
     // Update inventory database
     const inventoryRef = firebase.database().ref("inventory/" + productName)
@@ -59,7 +67,7 @@ export default function PurchasesTable() {
       title: 'Action',
       key: 'action',
       render: (text, record) =>
-        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.productName, record.quantity)}>
+        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.productName, record.quantity, record.price)}>
           <a>Delete</a>
         </Popconfirm>
     },

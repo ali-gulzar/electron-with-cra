@@ -88,6 +88,19 @@ const PurchasesForm = () => {
 
     // Make purchases
     const ref = firebase.database().ref('purchases')
+    const totalRef = ref.child('total')
+    totalRef.child('total').once('value', function(snapshot) {
+      if (snapshot.val()) {
+        const previousTotal = snapshot.val().values
+        totalRef.update({
+          value: previousTotal + values.price
+        })
+      } else {
+        totalRef.set({
+          value: values.price
+        })
+      }
+    })
     const key = ref.push().key;
     const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
     await ref.child(key).set({
