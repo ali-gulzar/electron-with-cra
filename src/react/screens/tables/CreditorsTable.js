@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Popconfirm } from 'antd';
+import { Table, Popconfirm, message } from 'antd';
 import firebase from 'firebase';
 
 var omit = require('lodash.omit');
@@ -10,6 +10,7 @@ export default function CreditorsTable() {
   const [cerditorTotal, setCreditorTotal] = useState(0);
 
   useEffect(() => {
+    message.warning('Loading data, please wait...', 1);
     firebase.database().ref("creditors").on('value', async function (snapshot) {
       if (snapshot.val()) {
         setCreditorTotal(snapshot.val().total.value)
@@ -17,6 +18,7 @@ export default function CreditorsTable() {
         const fetchedData = await Object.values(removeTotal);
         setCreditorsData(fetchedData);
       }
+      await message.success("Data loaded.", 2)
     });
   },[])
 

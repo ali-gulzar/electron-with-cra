@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import firebase from 'firebase';
 
 export default function InventoryTable() {
@@ -7,10 +7,12 @@ export default function InventoryTable() {
   const [inventoryData, setInventoryData] = useState([]);
 
   useEffect(() => {
+    message.warning('Loading data, please wait...', 1);
     firebase.database().ref("inventory").on('value', async function (snapshot) {
       if (snapshot.val()) {
-        setInventoryData(Object.values(snapshot.val()))
+        await setInventoryData(Object.values(snapshot.val()))
       }
+      await message.success("Data loaded.", 2)
     });
   },[])
 

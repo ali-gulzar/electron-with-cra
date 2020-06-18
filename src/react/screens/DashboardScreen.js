@@ -6,19 +6,19 @@ import Graph from './Graph';
 
 export default function DashboardScreen () {
 
-  const [cash, setCash] = useState(0);
-  const [sales, setSales] = useState(0);
+  const [cash, setCash] = useState(null);
+  const [sales, setSales] = useState(null);
 
   useEffect(() => {
     firebase.database().ref('cash/total').once('value', async function(snapshot) {
       if(snapshot.val()) {
         setCash(snapshot.val().value)
-      }
+      } else setCash(0)
     })
     firebase.database().ref('sales/total').once('value', async function(snapshot) {
       if(snapshot.val()) {
         setSales(snapshot.val().value)
-      }
+      } else setSales(0)
     })
   },[])
 
