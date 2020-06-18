@@ -14,7 +14,7 @@ export default function DashboardScreen () {
         setCash(snapshot.val().value)
       }
     })
-  },[cash])
+  },[])
 
   return (
     <div>
