@@ -7,6 +7,7 @@ import Graph from './Graph';
 export default function DashboardScreen () {
 
   const [cash, setCash] = useState(0);
+  const [sales, setSales] = useState(0);
 
   useEffect(() => {
     firebase.database().ref('cash').child('total').once('value', async function(snapshot) {
@@ -19,8 +20,8 @@ export default function DashboardScreen () {
   return (
     <div>
       <div style={{display: 'flex', marginBottom: 50}}>
-        <Card colorValue="card-profit" title="Profit" value="1,300,000"/>
-        <Card colorValue="card-sales" title="Sales" value="5,500,000"/>
+        <Card colorValue="card-profit" title="Profit" value="0"/>
+        <Card colorValue="card-sales" title="Sales" value={sales}/>
         <Card colorValue="card-expenses" title="Cash" value={cash}/>
       </div>
       <Graph/>

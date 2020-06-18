@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
-import { DollarOutlined, LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { MoneyCollectOutlined, DollarOutlined, LogoutOutlined, DashboardOutlined, ShoppingCartOutlined, ShopOutlined, ShoppingOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
 import DashboardScreen from './DashboardScreen';
 import InventoryScreen from './InventoryScreen';
@@ -9,6 +9,7 @@ import CreditorsScreen from './CreditorsScreen';
 import PurchasesScreen from './PurchasesScreen';
 import SalesScreen from './SalesScreen';
 import CashScreen from './CashScreen';
+import ExpenseScreen from './ExpensesScreen';
 
 export default class Main extends Component {
 
@@ -52,6 +53,8 @@ export default class Main extends Component {
         return <PurchasesScreen/>
       case 'sales':
         return <SalesScreen/>
+      case 'expense':
+        return <ExpenseScreen />
       default:
         return <CashScreen/>
     }
@@ -86,6 +89,9 @@ export default class Main extends Component {
         </Button>
         <Button type="primary" ghost={true} primary icon={<DollarOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'cash'})}>
           Cash
+        </Button>
+        <Button type="primary" ghost={true} primary icon={<MoneyCollectOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'expense'})}>
+          Expenses
         </Button>
         <Button type="primary" ghost={true} primary icon={<PlusCircleOutlined/>} size="large" shape="round" style={{marginBottom: 10}} onClick={() => this.setState({view: 'debtors'})}>
           Debtors
