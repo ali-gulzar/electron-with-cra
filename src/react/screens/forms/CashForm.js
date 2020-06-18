@@ -45,13 +45,13 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
             placeholder="Reason to perform cash transaction!"
             allowClear
           >
-          <Option value="sales">Sales</Option>
-          <Option value="purchases">Purchases</Option>
-          <Option value="sales-return">Sales Return</Option>
-          <Option value="purchase-return">Purchase Return</Option>
-          <Option value="expenses">Expenses</Option>
-          <Option value="cash-input">Cash Input</Option>
-          <Option value="cash-output">Cash Output</Option>
+          <Option value="sales (plus)">Sales</Option>
+          <Option value="purchases (minus)">Purchases</Option>
+          <Option value="sales-return (minus)">Sales Return</Option>
+          <Option value="purchase-return (plus)">Purchase Return</Option>
+          <Option value="expenses (minus)">Expenses</Option>
+          <Option value="cash-input (plus)">Cash Input</Option>
+          <Option value="cash-output (minus)">Cash Output</Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -99,7 +99,40 @@ const CashForm = () => {
   const [visible, setVisible] = useState(false);
 
   const onCreate = async values => {
-    console.log(values);
+    const ref = firebase.database().ref('cash')
+    const totalRef = ref.child('total')
+
+    // Update total value
+    totalRef.once('value', async function (snapshot) {
+      if (snapshot.val()) {
+        const previousTotal = snapshot.val().value
+        if (values.transaction.includes('plus')) {
+          await totalRef.update({
+            value: (parseInt(previousTotal) + parseInt(values.cash))
+          })
+        } else {
+          await totalRef.update({
+            value: (parseInt(previousTotal) - parseInt(values.cash))
+          })
+        }
+      } else {
+        totalRef.set({
+          value: values.cash
+        })
+      }
+    })
+
+    // Update cash database
+    const key = ref.push().key;
+    const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
+    await ref.child(key).set({
+      transaction: values.transaction,
+      description: values.description,
+      date: dateAdded,
+      cash: values.cash,
+      key: key
+    })
+
   };
 
   return (

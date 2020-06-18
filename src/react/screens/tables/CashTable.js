@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Table, Popconfirm } from 'antd';
 import firebase from 'firebase';
 
+var omit = require('lodash.omit');
+
 export default function CashTable() {
 
   const [cashData, setCashData] = useState([]);
 
   useEffect(() => {
-    console.log("TODO")
+    firebase.database().ref("cash").on('value', async function (snapshot) {
+      if (snapshot.val()) {
+        const removeTotal = await omit(snapshot.val(), ['total'])
+        const fetchedData = await Object.values(removeTotal);
+        setCashData(fetchedData);
+      }
+    });
   },[])
 
   function deleteItem () {

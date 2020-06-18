@@ -4,14 +4,6 @@ import PurchasesTable from './tables/PurchasesTable';
 
 export default class PurchasesScreen extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: false,
-      disable: true
-    }
-  }
-
   render(){
     return(
       <div>
