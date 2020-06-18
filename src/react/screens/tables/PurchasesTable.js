@@ -15,9 +15,20 @@ export default function PurchasesTable() {
     });
   },[])
 
-  function deleteItem (key) {
+  function deleteItem (key, productName, quantity) {
+
+    // Delete item from purchases
     const itemReference = firebase.database().ref("purchases/" + key);
     itemReference.remove();
+
+    // Update inventory
+    const inventoryRef = firebase.database().ref('inventory').child(productName)
+    inventoryRef.once('value', function (snapshot) {
+        const previousQuantity = snapshot.val().quantity
+        inventoryRef.update({
+              quantity: (parseInt(previousQuantity) - parseInt(quantity))
+        })
+    })
   }
 
   const columns = [
@@ -45,7 +56,7 @@ export default function PurchasesTable() {
       title: 'Action',
       key: 'action',
       render: (text, record) =>
-        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key)}>
+        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.productName, record.quantity)}>
           <a>Delete</a>
         </Popconfirm>
     },

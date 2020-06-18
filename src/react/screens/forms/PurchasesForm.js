@@ -86,6 +86,7 @@ const PurchasesForm = () => {
 
   const onCreate = async values => {
 
+    // Make purchases
     const ref = firebase.database().ref('purchases')
     const key = ref.push().key;
     const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
@@ -97,6 +98,7 @@ const PurchasesForm = () => {
           key: key
     })
 
+    // Make or update inventory
     const inventoryRef = firebase.database().ref('inventory').child(values.productName)
     inventoryRef.once('value', function (snapshot) {
       if (snapshot.val() != null) {
@@ -111,6 +113,7 @@ const PurchasesForm = () => {
         })
       }
     })
+    
   };
 
   return (
