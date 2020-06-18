@@ -15,9 +15,21 @@ export default function SalesTable() {
     });
   },[])
 
-  function deleteItem (key) {
+  function deleteItem (key, productName, quantity) {
+
+    // Update sales database
     const itemReference = firebase.database().ref("sales/" + key);
     itemReference.remove();
+
+    // Update inventory database
+    const inventoryRef = firebase.database().ref('inventory').child(productName)
+    inventoryRef.once('value', async function (snapshot) {
+      const previousQuantity = snapshot.val().quantity
+      inventoryRef.update({
+        quantity: (parseInt(previousQuantity) + parseInt(quantity))
+      })
+    })
+
   }
 
   const columns = [
@@ -50,7 +62,7 @@ export default function SalesTable() {
       title: 'Action',
       key: 'action',
       render: (text, record) =>
-        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key)}>
+        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.productName, record.quantity)}>
           <a>Delete</a>
         </Popconfirm>
     },

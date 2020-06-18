@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, Select } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, DatePicker, Select, message } from 'antd';
 import firebase from 'firebase';
 
 const { Option } = Select;
@@ -109,17 +109,34 @@ const SalesForm = (props) => {
 
   const onCreate = async values => {
 
-    const ref = firebase.database().ref('sales')
-    const key = ref.push().key;
-    const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
-    await ref.child(key).set({
-          productName: values.productName,
-          quantity: values.quantity,
-          price: values.price,
-          date: dateAdded,
-          buyer: values.buyer,
-          key: key
+    // Update inventory database
+    const inventoryRef = firebase.database().ref('inventory').child(values.productName)
+    inventoryRef.once('value', async function (snapshot) {
+      if (snapshot.val() != null) {
+        const quantity = snapshot.val().quantity
+        if (values.quantity > quantity) {
+          message.error(`Not enough product in the inventory. ${values.productName} has ${quantity} products in the inventory.`, 10)
+        } else {
+          // Update the inventory
+          inventoryRef.update({
+                quantity: (parseInt(quantity) - parseInt(values.quantity))
+          })
+          // Update sales databse
+          const ref = firebase.database().ref('sales')
+          const key = ref.push().key;
+          const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
+          await ref.child(key).set({
+                productName: values.productName,
+                quantity: values.quantity,
+                price: values.price,
+                date: dateAdded,
+                buyer: values.buyer,
+                key: key
+          })
+        }
+      }
     })
+
   };
 
   return (
