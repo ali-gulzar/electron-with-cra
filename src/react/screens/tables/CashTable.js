@@ -6,19 +6,23 @@ var omit = require('lodash.omit');
 
 export default function CashTable() {
 
-  const [cashData, setCashData] = useState([]);
-  const [cashTotal, setCashTotal] = useState([]);
+  const [results, setResults] = useState({
+    cashData: [],
+    cashTotal: []
+  })
 
   useEffect(() => {
     message.warning('Loading data, please wait...', 1);
     firebase.database().ref("cash").on('value', async function (snapshot) {
       if (snapshot.val()) {
-        setCashTotal(snapshot.val().total.value)
+        const totalValue = snapshot.val().total.value
         const removeTotal = await omit(snapshot.val(), ['total'])
         const fetchedData = await Object.values(removeTotal);
-        setCashData(fetchedData);
+        setResults({cashData: fetchedData, cashTotal: totalValue})
+        await message.success("Data loaded.", 1)
+      } else {
+        await message.success("Data loaded.", 1)
       }
-      await message.success("Data loaded.", 2)
     });
   },[])
 
@@ -31,7 +35,7 @@ export default function CashTable() {
 
     const totalReference = firebase.database().ref("cash/total");
     totalReference.update({
-      value: operationPlus ? (cashTotal - cash) : (cashTotal + cash)
+      value: operationPlus ? (results.cashTotal - cash) : (results.cashTotal + cash)
     });
   }
 
@@ -67,6 +71,6 @@ export default function CashTable() {
   ];
 
   return (
-    <Table columns={columns} dataSource={cashData} scroll={{ x: 950 }} />
+    <Table columns={columns} dataSource={results.cashData} scroll={{ x: 950 }} />
   )
 }

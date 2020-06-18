@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, InputNumber, DatePicker, message } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, DatePicker } from 'antd';
 import firebase from 'firebase';
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {

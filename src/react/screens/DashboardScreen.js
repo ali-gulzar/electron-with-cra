@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import Card from './Card';
 import Graph from './Graph';
