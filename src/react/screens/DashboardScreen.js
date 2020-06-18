@@ -18,7 +18,7 @@ export default function DashboardScreen () {
 
   return (
     <div>
-      <div style={{display: 'flex', marginTop: 20, marginBottom: 50}}>
+      <div style={{display: 'flex', marginBottom: 50}}>
         <Card colorValue="card-profit" title="Profit" value="1,300,000"/>
         <Card colorValue="card-sales" title="Sales" value="5,500,000"/>
         <Card colorValue="card-expenses" title="Cash" value={cash}/>

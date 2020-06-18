@@ -6,7 +6,6 @@
   border-radius: 20px;
   height: 200px;
   width: 300px;
-  margin: 1rem;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
 }
 
@@ -24,13 +23,4 @@
 
 .card-profit {
   background: linear-gradient(#02aab0, #00cdac)
-}
-
-.box {
-    position:relative;
-}
-.floating-button {
-    position:absolute;
-    bottom:0;
-    right:0;
 }

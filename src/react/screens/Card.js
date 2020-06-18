@@ -17,8 +17,8 @@ export default function Card (props) {
   })
 
   return (
-    <div className={`card card-hover ${colorValue}`}>
-      <h3 style={{marginLeft: 20, marginTop: 10, color: 'white', fontFamily: 'Permanent Marker', fontSize: 20}}>{title}</h3>
+    <div className={`card card-hover ${colorValue}`} style={{marginRight: 20}}>
+      <h3 style={{paddingLeft: 20, marginTop: 10, color: 'white', fontFamily: 'Permanent Marker', fontSize: 20}}>{title}</h3>
       <p style={{display: 'flex', fontSize: 30, justifyContent: 'flex-end', marginRight: 30, marginTop: 70, fontFamily: 'MuseoModerno'}}>Rs {value}</p>
     </div>
   )
