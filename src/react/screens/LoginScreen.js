@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Lottie from 'react-lottie';
-import animationData from '../assets/animations/review.json';
+import animationData from '../assets/animations/work.json';
 import { Form, Input, Button, notification } from 'antd';
 import firebase from 'firebase';
 
