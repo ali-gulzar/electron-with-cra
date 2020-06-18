@@ -10,9 +10,14 @@ export default function DashboardScreen () {
   const [sales, setSales] = useState(0);
 
   useEffect(() => {
-    firebase.database().ref('cash').child('total').once('value', async function(snapshot) {
+    firebase.database().ref('cash/total').once('value', async function(snapshot) {
       if(snapshot.val()) {
         setCash(snapshot.val().value)
+      }
+    })
+    firebase.database().ref('sales/total').once('value', async function(snapshot) {
+      if(snapshot.val()) {
+        setSales(snapshot.val().value)
       }
     })
   },[])

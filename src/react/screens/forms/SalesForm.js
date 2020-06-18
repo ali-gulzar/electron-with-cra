@@ -115,14 +115,27 @@ const SalesForm = (props) => {
       if (snapshot.val() != null) {
         const quantity = snapshot.val().quantity
         if (values.quantity > quantity) {
-          message.error(`Not enough product in the inventory. ${values.productName} has ${quantity} products in the inventory.`, 10)
+          message.error(`Not enough product in the inventory. ${values.productName} has ${quantity} products in the inventory.`, 5)
         } else {
           // Update the inventory
           inventoryRef.update({
                 quantity: (parseInt(quantity) - parseInt(values.quantity))
           })
-          // Update sales databse
+          // Update sales database
           const ref = firebase.database().ref('sales')
+          const totalRef = ref.child('total')
+          totalRef.child('total').once('value', function(snapshot) {
+            if (snapshot.val()) {
+              const previousTotal = snapshot.val().values
+              totalRef.update({
+                value: previousTotal + values.price
+              })
+            } else {
+              totalRef.set({
+                value: values.price
+              })
+            }
+          })
           const key = ref.push().key;
           const dateAdded = await (values.date.date() + '-' + values.date.month() + '-' + values.date.year())
           await ref.child(key).set({
