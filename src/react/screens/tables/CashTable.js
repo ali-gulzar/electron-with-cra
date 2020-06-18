@@ -18,7 +18,10 @@ export default function CashTable() {
     });
   },[])
 
-  function deleteItem (key, cash) {
+  function deleteItem (key, cash, operation) {
+
+    const operationPlus = operation.includes('plus')
+
     const itemReference = firebase.database().ref("cash/" + key);
     itemReference.remove();
 
@@ -26,7 +29,7 @@ export default function CashTable() {
     totalReference.once("value", function(snapshot) {
       const previousTotal = snapshot.val().value
       totalReference.update({
-        value: previousTotal - cash
+        value: operationPlus ? (previousTotal - cash) : (previousTotal + cash)
       })
     })
   }
@@ -56,7 +59,7 @@ export default function CashTable() {
       title: 'Action',
       key: 'action',
       render: (text, record) =>
-        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.cash)}>
+        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.cash, record.transaction)}>
           <a>Delete</a>
         </Popconfirm>
     },

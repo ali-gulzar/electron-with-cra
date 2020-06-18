@@ -28,35 +28,3 @@ export default function DashboardScreen () {
   )
 
 }
-
-// export default class DashboardScreen extends Component {
-//
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       cash: 0
-//     }
-//   }
-//
-//   componentWillMount () {
-//     firebase.database().ref('cash').child('total').once('value', async function(snapshot) {
-//       if(snapshot.val()) {
-//         this.setState({cash: snapshot.val().value})
-//       }
-//     })
-//   }
-//
-//   render () {
-//     const {cash} = this.state;
-//     return (
-//       <div>
-//         <div style={{display: 'flex', marginTop: 20, marginBottom: 50}}>
-//           <Card colorValue="card-profit" title="Profit" value="1,300,000"/>
-//           <Card colorValue="card-sales" title="Sales" value="5,500,000"/>
-//           <Card colorValue="card-expenses" title="Cash" value={cash}/>
-//         </div>
-//         <Graph/>
-//       </div>
-//     )
-//   }
-// }

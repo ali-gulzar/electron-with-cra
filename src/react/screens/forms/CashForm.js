@@ -104,9 +104,10 @@ const CashForm = () => {
 
     // Update total value
     totalRef.once('value', async function (snapshot) {
+      const operationPlus = values.transaction.includes('plus')
       if (snapshot.val()) {
         const previousTotal = snapshot.val().value
-        if (values.transaction.includes('plus')) {
+        if (operationPlus) {
           await totalRef.update({
             value: (parseInt(previousTotal) + parseInt(values.cash))
           })
@@ -116,9 +117,15 @@ const CashForm = () => {
           })
         }
       } else {
-        totalRef.set({
-          value: values.cash
-        })
+        if (operationPlus) {
+          totalRef.set({
+            value: values.cash
+          })
+        } else {
+          totalRef.set({
+            value: values.cash * (-1)
+          })
+        }
       }
     })
 
