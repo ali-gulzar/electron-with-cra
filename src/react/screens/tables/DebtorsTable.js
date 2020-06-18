@@ -2,23 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { Table, Popconfirm } from 'antd';
 import firebase from 'firebase';
 
+var omit = require('lodash.omit');
+
 export default function DebtorsTable() {
 
   const [debtorsData, setDebtorsData] = useState([]);
+  const [debtorTotal, setDebtorTotal] = useState(0);
 
   useEffect(() => {
-    console.log("TODO")
+    firebase.database().ref("debtors").on('value', async function (snapshot) {
+      if (snapshot.val()) {
+        setDebtorTotal(snapshot.val().total.value)
+        const removeTotal = await omit(snapshot.val(), ['total'])
+        const fetchedData = await Object.values(removeTotal);
+        setDebtorsData(fetchedData);
+      }
+    });
   },[])
 
-  function deleteItem () {
-    console.log("TOD");
+  function deleteItem (key, cash) {
+
+    const itemReference = firebase.database().ref("debtors/" + key);
+    itemReference.remove();
+
+    const totalReference = firebase.database().ref("debtors/total");
+    totalReference.update({
+      value: debtorTotal - cash
+    })
   }
 
   const columns = [
     {
-      title: 'Transaction',
-      dataIndex: 'transaction',
-      key: 'transaction',
+      title: 'Debtor Name',
+      dataIndex: 'debtorName',
+      key: 'debtorName',
     },
     {
       title: 'Cash',
@@ -39,7 +56,7 @@ export default function DebtorsTable() {
       title: 'Action',
       key: 'action',
       render: (text, record) =>
-        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem()}>
+        <Popconfirm title="Sure to delete?" onConfirm={() => deleteItem(record.key, record.cash)}>
           <a>Delete</a>
         </Popconfirm>
     },
